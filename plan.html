@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan - GATE EC 2027 Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">GATE 2027</a>
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="plan.html" class="active">Plan</a></li>
+            <li><a href="quiz.html">Quiz & Mistakes</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>Master Study Plan</h1>
+            <div class="loader" id="plan-loader"></div>
+        </div>
+        
+        <div id="plan-container">
+            <p style="color: var(--text-secondary);">Loading plan from database...</p>
+        </div>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/plan.js"></script>
+</body>
+</html>

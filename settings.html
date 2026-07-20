@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - GATE EC 2027 Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">GATE 2027</a>
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="plan.html">Plan</a></li>
+            <li><a href="quiz.html">Quiz & Mistakes</a></li>
+            <li><a href="settings.html" class="active">Settings</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1>System Settings</h1>
+            <div class="loader" id="settings-loader"></div>
+        </div>
+
+        <div class="grid">
+            <div class="glass-panel">
+                <h2>Preferences</h2>
+                <form id="settings-form">
+                    <div class="form-group">
+                        <label for="checkin-time">Daily Check-in Time (24h format)</label>
+                        <input type="time" id="checkin-time" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="reminder-intervals">Reminder Intervals (hours, comma separated)</label>
+                        <input type="text" id="reminder-intervals" class="form-control" value="2,6,12" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telegram-id">Telegram Chat ID</label>
+                        <input type="text" id="telegram-id" class="form-control" readonly placeholder="Set automatically when you message the bot">
+                        <small style="color: var(--text-secondary);">Message your bot on Telegram to sync this.</small>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Save Settings</button>
+                    <p id="save-status" style="margin-top: 1rem; text-align: center; font-size: 0.875rem;"></p>
+                </form>
+            </div>
+            
+            <div class="glass-panel">
+                <h2>System Info</h2>
+                <div style="margin-top: 1.5rem;">
+                    <p><strong>App Version:</strong> 1.0.0-adaptive</p>
+                    <p style="margin-top: 0.5rem;"><strong>Database:</strong> Connected to Google Sheets</p>
+                    <p style="margin-top: 0.5rem;"><strong>Bot Status:</strong> <span style="color: var(--success-color);">Active</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>
