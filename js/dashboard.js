@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>${task.subject} | ~${task.estimatedMins} mins</p>
                 </div>
                 <div class="task-actions">
-                    <button class="btn btn-outline" onclick="updateTaskStatus('${task.date}', '${task.topic}', 'partial')">Partial</button>
-                    <button class="btn" onclick="updateTaskStatus('${task.date}', '${task.topic}', 'done')">Done</button>
+                    <button class="btn btn-outline" onclick="updateTaskStatus('${task.topic}', 'partial')">Partial</button>
+                    <button class="btn" onclick="updateTaskStatus('${task.topic}', 'done')">Done</button>
                 </div>
             `;
             container.appendChild(el);
@@ -117,14 +117,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Expose to window for inline onclick handlers
-    window.updateTaskStatus = async (date, topic, status) => {
+    window.updateTaskStatus = async (topic, status) => {
+        const today = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }); // yyyy-MM-dd
         document.getElementById('tasks-loader').style.display = 'block';
         try {
-            await API.updateTask(date, topic, status);
+            const result = await API.updateTask(today, topic, status);
+            if (result && result.error) {
+                alert('Error: ' + result.error);
+                document.getElementById('tasks-loader').style.display = 'none';
+                return;
+            }
             // Refresh dashboard
             await initDashboard();
         } catch (e) {
-            alert('Failed to update task.');
+            alert('Failed to update task: ' + e.message);
             document.getElementById('tasks-loader').style.display = 'none';
         }
     };
