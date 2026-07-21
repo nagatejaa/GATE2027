@@ -25,24 +25,25 @@ const Allocator = {
     // Filter to current phase pending tasks
     const pendingInPhase = plan.filter(p => p.PhaseNum == currentInfo.phaseNum && p.Status !== 'done');
     
-    let allocated = [];
-    
-    // Simple allocation logic based on energy
+    const dateStr = Utilities.formatDate(dateObj, "Asia/Kolkata", "yyyy-MM-dd");
     energy = energy.toLowerCase();
+    let allocated = [];
     
     if (energy === 'exhausted') {
       allocated.push({
         topic: 'Review Error Log',
         subject: 'General',
         estimatedMins: 15,
-        status: 'pending'
+        status: 'pending',
+        date: dateStr
       });
     } else if (energy === 'low') {
       allocated.push({
         topic: 'Aptitude Practice (10 Qs)',
         subject: 'General Aptitude',
         estimatedMins: 20,
-        status: 'pending'
+        status: 'pending',
+        date: dateStr
       });
       // Maybe one light revision
       const rev = pendingInPhase.find(p => p.EstimatedMins <= 30);
@@ -51,7 +52,8 @@ const Allocator = {
           topic: `Revise: ${rev.Topic}`,
           subject: rev.Subject,
           estimatedMins: rev.EstimatedMins,
-          status: 'pending'
+          status: 'pending',
+          date: dateStr
         });
       }
     } else if (energy === 'medium') {
@@ -62,7 +64,8 @@ const Allocator = {
           topic: t.Topic,
           subject: t.Subject,
           estimatedMins: t.EstimatedMins || 60,
-          status: 'pending'
+          status: 'pending',
+          date: dateStr
         });
       }
     } else if (energy === 'high') {
@@ -73,7 +76,8 @@ const Allocator = {
           topic: t1.Topic,
           subject: t1.Subject,
           estimatedMins: t1.EstimatedMins || 60,
-          status: 'pending'
+          status: 'pending',
+          date: dateStr
         });
       }
       if (pendingInPhase.length > 1) {
@@ -82,12 +86,12 @@ const Allocator = {
           topic: `PYQ / Practice: ${t2.Topic}`,
           subject: t2.Subject,
           estimatedMins: 45,
-          status: 'pending'
+          status: 'pending',
+          date: dateStr
         });
       }
     }
     
-    const dateStr = Utilities.formatDate(dateObj, "Asia/Kolkata", "yyyy-MM-dd");
     SheetsDB.updateDailyLog(dateStr, {
       EnergyLevel: energy,
       TimeAvailable: timeStr,

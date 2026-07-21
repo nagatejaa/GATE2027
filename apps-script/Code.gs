@@ -7,10 +7,15 @@ function doGet(e) {
 }
 
 function doPost(e) {
-  // Telegram webhooks come as POST with no token in the URL usually, 
-  // but we configured the webhook URL to include ?action=telegram-webhook
+  // Telegram webhooks come as POST with ?action=telegram-webhook
+  // ALWAYS return OK to Telegram, otherwise it retries every 1 min causing spam
   if (e.parameter && e.parameter.action === 'telegram-webhook') {
-    return handleTelegramWebhook(e);
+    try {
+      handleTelegramWebhook(e);
+    } catch(err) {
+      console.error('doPost top-level error: ' + err.message);
+    }
+    return ContentService.createTextOutput('OK');
   }
   return handleRequest(e, 'POST');
 }
